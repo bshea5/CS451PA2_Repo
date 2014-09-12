@@ -53,7 +53,7 @@ inline void DisplayLattice()
 	}
 	glEnd();
 
-	//TODO: draw lattice edges using FFD_lattice
+	//DONE: draw lattice edges using FFD_lattice
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.3, 0.9);
 	int count = 0, index = 0;

@@ -156,7 +156,6 @@ void computeCOM_R()
 		newNode[1] = box[3];				//back to top row
 		newNode[2] = newNode[2] - zIncr;	//move away to next z layer
 	}
-	std::cout << "i=1000 is: " << FFD_lattice[999] << std::endl;
     //-------------------------------------------------------------------------
     // compute center of mass and R...
     COM.set( (box[1]+box[0])/2,(box[3]+box[2])/2,(box[5]+box[4])/2);
