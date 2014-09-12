@@ -116,35 +116,47 @@ void computeCOM_R()
 	//int boxSize = sizeof(box) / sizeof(box[0]);
 	for (int i = 0; i < sizeof(box) / sizeof(box[0]); i++)
 	{
-		std::cout << "box" << i << ": " << box[i] << std::endl;
+		//std::cout << "box" << i << ": " << box[i] << std::endl;
 		box[i] = box[i] * 1.2;
 		std::cout << "1.2xbox" << i << ": " << box[i] << std::endl;
 	}
 
 	//TODO: build FFD_lattice here using the scaled bounding box
-	//curiously, z_max is closest to the screen
+	//curiously, z_max is closest to the screen (0_0);
 	//corners of the cube
 	FFD_lattice.resize(lattice_nx * lattice_ny * lattice_nz);
-	FFD_lattice[0] = Point3d(box[0], box[3], box[5], 0.0);	//front, top-left
-	FFD_lattice[1] = Point3d(box[1], box[3], box[5], 0.0);	//front, top-right
-	FFD_lattice[2] = Point3d(box[0], box[2], box[5], 0.0);	//front, bottom-left
-	FFD_lattice[3] = Point3d(box[1], box[2], box[5], 0.0);	//front, bottom-right
-	FFD_lattice[4] = Point3d(box[0], box[3], box[4], 0.0);	//back, top-left
-	FFD_lattice[5] = Point3d(box[1], box[3], box[4], 0.0);	//back, top-right
-	FFD_lattice[6] = Point3d(box[0], box[2], box[4], 0.0);	//back, bottom-left
-	FFD_lattice[7] = Point3d(box[1], box[2], box[4], 0.0);	//back, bottom-right
-	//midpoints
-	//will generate n-1 vertices for n length
-	double xIncr = (box[1] - box[0]) / lattice_nx;	//increment by this much x
-	double yIncr = (box[3] - box[2]) / lattice_ny;	//increment by this much y
-	double zIncr = (box[5] - box[4]) / lattice_nz;	//increment by this much z
-	Point3d newNode = FFD_lattice[0];
-	for (int i = 0; i < lattice_nx - 1; i++) //front, top row
-	{
-		newNode[0] = newNode[0] + xIncr;
-		FFD_lattice[8 + i] = newNode;
-	}
+	//FFD_lattice[0] = Point3d(box[0], box[3], box[5], 0.0);	//front, top-left
+	//FFD_lattice[1] = Point3d(box[1], box[3], box[5], 0.0);	//front, top-right
+	//FFD_lattice[2] = Point3d(box[0], box[2], box[5], 0.0);	//front, bottom-left
+	//FFD_lattice[3] = Point3d(box[1], box[2], box[5], 0.0);	//front, bottom-right
+	//FFD_lattice[4] = Point3d(box[0], box[3], box[4], 0.0);	//back, top-left
+	//FFD_lattice[5] = Point3d(box[1], box[3], box[4], 0.0);	//back, top-right
+	//FFD_lattice[6] = Point3d(box[0], box[2], box[4], 0.0);	//back, bottom-left
+	//FFD_lattice[7] = Point3d(box[1], box[2], box[4], 0.0);	//back, bottom-right
 
+	double xIncr = (box[1] - box[0]) / (lattice_nx-1);	//increment by this much x
+	double yIncr = (box[3] - box[2]) / (lattice_ny-1);	//increment by this much y
+	double zIncr = (box[5] - box[4]) / (lattice_nz-1);	//increment by this much z
+	Point3d newNode = Point3d(box[0], box[3], box[5], 0.0); //front, top-left node
+	int count = 0;
+	for (int k = 0; k < lattice_nz; k++)
+	{
+		for (int j = 0; j < lattice_ny; j++)
+		{
+			for (int i = 0; i < lattice_nx; i++)
+			{
+				//fill in a row
+				FFD_lattice[count] = newNode;
+				newNode[0] = newNode[0] + xIncr;
+				count++;
+			}
+			newNode[0] = box[0];				//back to first column
+			newNode[1] = newNode[1] - yIncr;	//move to next row
+		}
+		newNode[1] = box[3];				//back to top row
+		newNode[2] = newNode[2] - zIncr;	//move away to next z layer
+	}
+	std::cout << "i=1000 is: " << FFD_lattice[999] << std::endl;
     //-------------------------------------------------------------------------
     // compute center of mass and R...
     COM.set( (box[1]+box[0])/2,(box[3]+box[2])/2,(box[5]+box[4])/2);
