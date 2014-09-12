@@ -43,19 +43,50 @@ inline void DisplayLattice()
 {
 	glDisable(GL_LIGHTING); //disable lighting
 
-	//TODO: draw lattice nodes using FFD_lattice
-	glPointSize(5);
+	//DONE: draw lattice nodes using FFD_lattice
+	glPointSize(4);
 	glBegin(GL_POINTS);
 	glColor3f(0.9, 0.0, 0.0);
 	for (int i = 0; i < FFD_lattice.size(); i++)
 	{
-		//std::cout << FFD_lattice[i][0] << "," << FFD_lattice[i][1] << "," << FFD_lattice[i][2] << std::endl;
 		glVertex3d(FFD_lattice[i][0], FFD_lattice[i][1], FFD_lattice[i][2]);
 	}
 	glEnd();
 
 	//TODO: draw lattice edges using FFD_lattice
-
+	glBegin(GL_LINES);
+	glColor3f(0.0, 0.3, 0.9);
+	int count = 0, index = 0;
+	for (int k = 0; k < lattice_nz; k++)
+	{
+		for (int j = 0; j < lattice_ny; j++)
+		{
+			for (int i = 0; i < lattice_nx; i++)
+			{
+				if (k != 0) //draw z-axis lines
+				{
+					glVertex3d(FFD_lattice[count][0], FFD_lattice[count][1], FFD_lattice[count][2]);
+					index = count - lattice_ny * lattice_nx;
+					glVertex3d(FFD_lattice[index][0], FFD_lattice[index][1], FFD_lattice[index][2]);
+				}
+				if (j != 0)	//draw vertical line
+				{
+					glVertex3d(FFD_lattice[count][0], FFD_lattice[count][1], FFD_lattice[count][2]);
+					index = count - lattice_nx;
+					glVertex3d(FFD_lattice[index][0], FFD_lattice[index][1], FFD_lattice[index][2]);
+				}
+				if (i != 0) //draw horizontal line
+				{
+					//count = i + lattice_nx * j;
+					glVertex3d(FFD_lattice[count][0], FFD_lattice[count][1], FFD_lattice[count][2]);
+					index = count - 1;
+					glVertex3d(FFD_lattice[index][0], FFD_lattice[index][1], FFD_lattice[index][2]);
+				}
+				count++;
+			}
+		}
+	}
+	glEnd();
 }
 
 inline void DisplayModel(model& M, bool randcolor=false)

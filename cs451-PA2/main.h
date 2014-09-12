@@ -112,7 +112,7 @@ void computeCOM_R()
         }//j
     }//i
 	
-	//TODO: scale the bounding box "box[6]" 1.2 times
+	//DONE: scale the bounding box "box[6]" 1.2 times
 	//int boxSize = sizeof(box) / sizeof(box[0]);
 	for (int i = 0; i < sizeof(box) / sizeof(box[0]); i++)
 	{
@@ -121,7 +121,7 @@ void computeCOM_R()
 		std::cout << "1.2xbox" << i << ": " << box[i] << std::endl;
 	}
 
-	//TODO: build FFD_lattice here using the scaled bounding box
+	//DONE: build FFD_lattice here using the scaled bounding box
 	//curiously, z_max is closest to the screen (0_0);
 	//corners of the cube
 	FFD_lattice.resize(lattice_nx * lattice_ny * lattice_nz);
