@@ -25,7 +25,7 @@ list<model> models; //NOTE: only the first model of the list is used in this cod
 float R=0;          //radius
 Point3d COM;        //center of mass
 
-//TODO: fill FFD_lattice in computeCOM_R() below
+//DONE: fill FFD_lattice in computeCOM_R() below
 vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has size = (lattice_nx X lattice_ny X lattice_nz)
 
 //TODO: fill FFD_parameterization in parameterizeModel() below
@@ -116,9 +116,7 @@ void computeCOM_R()
 	//int boxSize = sizeof(box) / sizeof(box[0]);
 	for (int i = 0; i < sizeof(box) / sizeof(box[0]); i++)
 	{
-		//std::cout << "box" << i << ": " << box[i] << std::endl;
 		box[i] = box[i] * 1.2;
-		std::cout << "1.2xbox" << i << ": " << box[i] << std::endl;
 	}
 
 	//DONE: build FFD_lattice here using the scaled bounding box
@@ -136,8 +134,7 @@ void computeCOM_R()
 		{
 			for (int i = 0; i < lattice_nx; i++)
 			{
-				//fill in a row
-				FFD_lattice[count] = newNode;
+				FFD_lattice[count] = newNode;	//add node to lattice
 				newNode[0] = newNode[0] + xIncr;
 				count++;
 			}

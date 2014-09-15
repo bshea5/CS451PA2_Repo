@@ -278,13 +278,26 @@ void Mouse(int button, int state, int x, int y)
 	// 
 	// TODO: check if the user clicks on one of the lattice nodes
 	//
-	std::cout << "x: " << x << "y: " << y << std::endl;
-	for (int i = 0; i < FFD_lattice.size(); i++)
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 	{
-		if (x == FFD_lattice[i][0] && y == FFD_lattice[i][1])
-		{
-			std::cout << "index " << i << " clicked." << std::endl;
-		}
+		int w = glutGet(GLUT_WINDOW_WIDTH);
+		int h = glutGet(GLUT_WINDOW_HEIGHT);
+		float x1 = (2.0f * x) / w - 1.0f;
+		float y1 = 1.0f - (2.0f * y) / h;
+		//parametized mouse click
+		std::cout << "x1: " << x1 << "y1: " << y1 << std::endl;
+//		for (int i = 0; i < FFD_lattice.size(); i++)
+//		{
+//			//might change this to subtraction and compare that
+//			//float sx = x1 - FFD_lattice[i][0];
+//			//float sy = y1 - FFD_lattice[i][1];
+//			//if (x1 == FFD_lattice[i][0] && y1 == FFD_lattice[i][1])
+//			if ( x1 == nx && y1 == ny)
+//			//if ( (-0.5 < sx < 0.5) && (-0.5 < sy < 0.5) )
+//			{
+//				std::cout << "index " << i << " clicked." << std::endl;
+//			}
+//		}
 	}
 }
 
