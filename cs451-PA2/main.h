@@ -125,15 +125,6 @@ void computeCOM_R()
 	//curiously, z_max is closest to the screen (0_0);
 	//corners of the cube
 	FFD_lattice.resize(lattice_nx * lattice_ny * lattice_nz);
-	//FFD_lattice[0] = Point3d(box[0], box[3], box[5], 0.0);	//front, top-left
-	//FFD_lattice[1] = Point3d(box[1], box[3], box[5], 0.0);	//front, top-right
-	//FFD_lattice[2] = Point3d(box[0], box[2], box[5], 0.0);	//front, bottom-left
-	//FFD_lattice[3] = Point3d(box[1], box[2], box[5], 0.0);	//front, bottom-right
-	//FFD_lattice[4] = Point3d(box[0], box[3], box[4], 0.0);	//back, top-left
-	//FFD_lattice[5] = Point3d(box[1], box[3], box[4], 0.0);	//back, top-right
-	//FFD_lattice[6] = Point3d(box[0], box[2], box[4], 0.0);	//back, bottom-left
-	//FFD_lattice[7] = Point3d(box[1], box[2], box[4], 0.0);	//back, bottom-right
-
 	double xIncr = (box[1] - box[0]) / (lattice_nx-1);	//increment by this much x
 	double yIncr = (box[3] - box[2]) / (lattice_ny-1);	//increment by this much y
 	double zIncr = (box[5] - box[4]) / (lattice_nz-1);	//increment by this much z

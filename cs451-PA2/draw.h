@@ -278,6 +278,14 @@ void Mouse(int button, int state, int x, int y)
 	// 
 	// TODO: check if the user clicks on one of the lattice nodes
 	//
+	std::cout << "x: " << x << "y: " << y << std::endl;
+	for (int i = 0; i < FFD_lattice.size(); i++)
+	{
+		if (x == FFD_lattice[i][0] && y == FFD_lattice[i][1])
+		{
+			std::cout << "index " << i << " clicked." << std::endl;
+		}
+	}
 }
 
 
