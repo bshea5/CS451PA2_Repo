@@ -36,7 +36,7 @@ extern unsigned int lattice_nx, lattice_ny, lattice_nz;
 extern vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has size = (lattice_nx X lattice_ny X lattice_nz)
 extern vector<Point3d> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
                                              //FFD_parameterization has size = models.front().v_size
-
+Point3d *clickedNode = NULL;	//selected node
 //-----------------------------------------------------------------------------
 
 inline void DisplayLattice()
@@ -52,6 +52,16 @@ inline void DisplayLattice()
 		glVertex3d(FFD_lattice[i][0], FFD_lattice[i][1], FFD_lattice[i][2]);
 	}
 	glEnd();
+
+	//draw something around the selected node
+	if (clickedNode != NULL)
+	{
+		glPointSize(15);
+		glBegin(GL_POINTS);
+		glColor3f(0.2, 0.8, 0.4);
+		glVertex3d(clickedNode[0][0], clickedNode[0][1], clickedNode[0][2]);
+		glEnd();
+	}
 
 	//DONE: draw lattice edges using FFD_lattice
 	glBegin(GL_LINES);
@@ -277,27 +287,48 @@ void Mouse(int button, int state, int x, int y)
 	// This handles mouse click 
 	// 
 	// TODO: check if the user clicks on one of the lattice nodes
+	//		TODO: overlapping vertices
 	//
+
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 	{
-		int w = glutGet(GLUT_WINDOW_WIDTH);
-		int h = glutGet(GLUT_WINDOW_HEIGHT);
-		float x1 = (2.0f * x) / w - 1.0f;
-		float y1 = 1.0f - (2.0f * y) / h;
-		//parametized mouse click
-		std::cout << "x1: " << x1 << "y1: " << y1 << std::endl;
-//		for (int i = 0; i < FFD_lattice.size(); i++)
-//		{
-//			//might change this to subtraction and compare that
-//			//float sx = x1 - FFD_lattice[i][0];
-//			//float sy = y1 - FFD_lattice[i][1];
-//			//if (x1 == FFD_lattice[i][0] && y1 == FFD_lattice[i][1])
-//			if ( x1 == nx && y1 == ny)
-//			//if ( (-0.5 < sx < 0.5) && (-0.5 < sy < 0.5) )
-//			{
-//				std::cout << "index " << i << " clicked." << std::endl;
-//			}
-//		}
+		GLint viewport[4];			// Where The Viewport Values Will Be Stored
+		GLdouble modelview[16];     // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
+		GLdouble projection[16];    // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
+		GLdouble winX, winY, winZ;	// Holds the x,y,z coordinates
+		GLdouble posX, posY, posZ;  // Hold The Final Values
+		glGetDoublev(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
+		glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
+		glGetIntegerv(GL_VIEWPORT, viewport);				// Retrieves The Viewport Values (X, Y, Width, Height)
+
+		//look through lattice vertices and find one near the mouse coordinates
+		for (int i = 0; i < FFD_lattice.size(); i++)
+		{
+			//project lattice point into screen space
+			posX = FFD_lattice[i][0];
+			posY = FFD_lattice[i][1];
+			//posY = viewport[3] - posY;
+			posZ = FFD_lattice[i][2];
+			gluProject(posX, posY, posZ, 
+				modelview, projection, viewport, &winX, &winY, &winZ); 
+			winY = (double)viewport[3] - winY - 9; //seems to be 9 off?
+			//std::cout << i << ": " << winX << ", " << winY << ", " << winZ << std::endl;
+
+			//compare mouse values with lattice point projected on screen
+			double xDif = winX - x;
+			double yDif = winY - y;
+			if ( ( -5 < xDif) && (xDif < 5) ) //mouseX is near a vertex x value
+			{
+				if ( (-5 < yDif) && (yDif < 5) )	///mouseY is near a vertex y value
+				{
+					std::cout << "index: " << i << std::endl;
+					clickedNode = &FFD_lattice[i];	//select node
+					return;
+				}
+			}
+		} 
+
+		//std::cout << "posX: " << posX << " posY: " << posY << " posZ: " << posZ << std::endl;
 	}
 }
 

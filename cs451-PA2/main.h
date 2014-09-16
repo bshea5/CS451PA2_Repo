@@ -135,6 +135,7 @@ void computeCOM_R()
 			for (int i = 0; i < lattice_nx; i++)
 			{
 				FFD_lattice[count] = newNode;	//add node to lattice
+				//std::cout << count << ": " << FFD_lattice[count] << std::endl;
 				newNode[0] = newNode[0] + xIncr;
 				count++;
 			}
