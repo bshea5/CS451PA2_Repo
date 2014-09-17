@@ -277,7 +277,6 @@ void Reshape( int w, int h)
 	//Othogonal view
 	//glOrtho(-R * 1.5, R * 1.5, -R * 1.5, R * 1.5, -R * 100, R * 100);
 
-
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 }
@@ -292,6 +291,7 @@ void Mouse(int button, int state, int x, int y)
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 	{
+		std::cout << "mouse x,y : " << x << ", " << y << std::endl;
 		GLint viewport[4];			// Where The Viewport Values Will Be Stored
 		GLdouble modelview[16];     // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
 		GLdouble projection[16];    // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
@@ -315,6 +315,7 @@ void Mouse(int button, int state, int x, int y)
 			//std::cout << i << ": " << winX << ", " << winY << ", " << winZ << std::endl;
 
 			//compare mouse values with lattice point projected on screen
+			//does where the mouse clicks differ for OS's?
 			double xDif = winX - x;
 			double yDif = winY - y;
 			if ( ( -5 < xDif) && (xDif < 5) ) //mouseX is near a vertex x value
@@ -326,10 +327,8 @@ void Mouse(int button, int state, int x, int y)
 					return;
 				}
 			}
-		} 
-
-		//std::cout << "posX: " << posX << " posY: " << posY << " posZ: " << posZ << std::endl;
-	}
+		} //end for
+	} //end if
 }
 
 
