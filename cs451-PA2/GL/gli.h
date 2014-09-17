@@ -55,8 +55,12 @@ public:
         m_motionFunc = motion;
     }   
 
-    static void gliDisableMouse(){ m_DisalbeMouseControl=true; }
-    static void gliEndMouse(){ m_DisalbeMouseControl=true; }
+    static void gliDisableMouse(){ m_DisableMouseControl=true; }
+    static void gliEnableMouse(){ m_DisableMouseControl=false; }
+    static void gliEndMouse(){ m_DisableMouseControl=true; }
+    static void selectedNode(){ nodeSelected = true; }
+    static void deselectedNode() { nodeSelected = false; }
+    static bool isSelected(){ return nodeSelected; }
 
     static const float * getCameraPos() { return m_CameraPos; }
     static void setCameraPosX(float x) { m_CameraPos[0]=x; }
@@ -80,7 +84,8 @@ private:
     static GLI_MOUSE_FUNC    m_mouseFunc;   
     static GLI_MOTION_FUNC   m_motionFunc;
 
-    static bool m_DisalbeMouseControl;
+    static bool m_DisableMouseControl;
+    static bool nodeSelected;	//is a node selected?
     
     static GLfloat m_CameraPos[3];
     static GLfloat m_deltaDis[3];

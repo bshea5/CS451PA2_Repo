@@ -13,7 +13,8 @@ using namespace std;
 GLfloat gli::m_CameraPos[3] = {0,0,100};
 GLfloat gli::m_deltaDis[3]  = {0,0,0};
 
-bool gli::m_DisalbeMouseControl=false;
+bool gli::m_DisableMouseControl=false;
+bool gli::nodeSelected = false;
 
 GLfloat gli::m_currentAzim = 0;
 GLfloat gli::m_deltaAzim   = 0;
@@ -31,6 +32,7 @@ gli::GLI_MOTION_FUNC   gli::m_motionFunc   = NULL;
 float gli::m_WindowX[3]={1,0,0};
 float gli::m_WindowY[3]={0,1,0};
 
+
 void gli::gliInit()
 {
     glutDisplayFunc( gliDisplay );
@@ -43,7 +45,7 @@ void gli::gliDisplay( void )
     //Draw scene
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    if( !m_DisalbeMouseControl ){ //mouse control is enabled
+    if( !m_DisableMouseControl ){ //mouse control is enabled
         glTranslatef( (m_CameraPos[0]+m_deltaDis[0]),
                      -(m_CameraPos[1]+m_deltaDis[1]), 
                      -(m_CameraPos[2]+m_deltaDis[2]) );
@@ -91,7 +93,7 @@ void gli::gliDisplay( void )
 void gli::
 gliMouse( int button, int state, int x, int y ){
 
-    if( !m_DisalbeMouseControl ){
+    if( !m_DisableMouseControl ){
         if( glutGetModifiers()!=GLUT_ACTIVE_CTRL ){
             if( state == GLUT_UP ) //reset every thing
             {
@@ -129,7 +131,7 @@ gliMouse( int button, int state, int x, int y ){
 void gli::
 gliMotion( int x, int y ){
 
-    if( !m_DisalbeMouseControl ){
+    if( !m_DisableMouseControl && nodeSelected == false ){
 
         if( m_PressedButton == GLUT_RIGHT_BUTTON )
         {
@@ -139,8 +141,8 @@ gliMotion( int x, int y ){
 			m_deltaDis[0] = (GLfloat)((m_CameraPos[0]>5) ? m_CameraPos[0] : 5) * ((GLfloat)(x - m_StartX)) / 20.0f;
 			m_deltaDis[1] = (GLfloat)((m_CameraPos[1]>5) ? m_CameraPos[1] : 5) * ((GLfloat)(y - m_StartY)) / 20.0f;
           }
-        else if(m_PressedButton == GLUT_LEFT_BUTTON)
-        {
+        else if(m_PressedButton == GLUT_LEFT_BUTTON )
+        {//move camera
             m_deltaAzim = ((GLfloat)(x - m_StartX))/5.0f;
             m_deltaElev = ((GLfloat)(y - m_StartY))/5.0f;
             //compute window x, y dir

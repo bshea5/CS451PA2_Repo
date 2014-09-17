@@ -285,18 +285,19 @@ void Mouse(int button, int state, int x, int y)
 {
 	// This handles mouse click 
 	// 
-	// TODO: check if the user clicks on one of the lattice nodes
-	//		TODO: overlapping vertices
+	// DONE: check if the user clicks on one of the lattice nodes
+	//		TOFIX: overlapping vertices
 	//
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 	{
-		std::cout << "mouse x,y : " << x << ", " << y << std::endl;
+		//std::cout << "mouse x,y : " << x << ", " << y << std::endl;
 		GLint viewport[4];			// Where The Viewport Values Will Be Stored
 		GLdouble modelview[16];     // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
 		GLdouble projection[16];    // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
 		GLdouble winX, winY, winZ;	// Holds the x,y,z coordinates
 		GLdouble posX, posY, posZ;  // Hold The Final Values
+
 		glGetDoublev(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
 		glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
 		glGetIntegerv(GL_VIEWPORT, viewport);				// Retrieves The Viewport Values (X, Y, Width, Height)
@@ -318,16 +319,21 @@ void Mouse(int button, int state, int x, int y)
 			//does where the mouse clicks differ for OS's?
 			double xDif = winX - x;
 			double yDif = winY - y;
-			if ( ( -5 < xDif) && (xDif < 5) ) //mouseX is near a vertex x value
+			if ( ( -8 < xDif) && (xDif < 8) ) //mouseX is near a vertex x value
 			{
-				if ( (-5 < yDif) && (yDif < 5) )	///mouseY is near a vertex y value
+				if ( (-8 < yDif) && (yDif < 8) )	///mouseY is near a vertex y value
 				{
 					std::cout << "index: " << i << std::endl;
 					clickedNode = &FFD_lattice[i];	//select node
+					gli::selectedNode();	//disable mouse camera control
 					return;
 				}
 			}
 		} //end for
+
+		clickedNode = NULL;		//deselect
+		gli::deselectedNode();	//enable mouse camera control
+
 	} //end if
 }
 
@@ -340,6 +346,32 @@ void Motion(int x, int y)
 	// TODO: check if the user is moving a selected lattice node
 	//       if so move the node to a new location
 	//
+	if ( clickedNode == NULL ) {
+		return;
+	}
+
+	GLint viewport[4];			// Where The Viewport Values Will Be Stored
+	GLdouble modelview[16];     // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
+	GLdouble projection[16];    // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
+	GLdouble winX, winY, winZ;	// Holds the x,y,z coordinates from mouse
+	GLdouble objX, objY, objZ;  // Hold values for the new vertex location
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
+	glGetIntegerv(GL_VIEWPORT, viewport);				// Retrieves The Viewport Values (X, Y, Width, Height)
+
+	winX = (double)x;
+	winY = (double)viewport[3] - y - 9; //seems to be 9 off?
+	glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_DOUBLE, &winZ );
+
+	//map the mouse click coordinates to object coordinates
+	gluUnProject( winX, winY, winZ,
+			modelview, projection, viewport, &objX, &objY, &objZ );
+
+	clickedNode[0][0] = objX;
+	clickedNode[0][1] = objY;
+	clickedNode[0][2] = objZ; // z isn't coming out right
+
 
 	// TODO: recompute the position of every vertex in the model 
 	//       i.e., using FFD_parameterization and FFD_lattice 
