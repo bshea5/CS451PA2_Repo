@@ -36,7 +36,7 @@ extern unsigned int lattice_nx, lattice_ny, lattice_nz;
 extern vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has size = (lattice_nx X lattice_ny X lattice_nz)
 extern vector<Point3d> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
                                              //FFD_parameterization has size = models.front().v_size
-Point3d *clickedNode = NULL;	//selected node
+Point3d *clickedNode = NULL;	//selected node from lattice
 //-----------------------------------------------------------------------------
 
 inline void DisplayLattice()
@@ -295,8 +295,8 @@ void Mouse(int button, int state, int x, int y)
 		GLint viewport[4];			// Where The Viewport Values Will Be Stored
 		GLdouble modelview[16];     // Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
 		GLdouble projection[16];    // Where The 16 Doubles Of The Projection Matrix Are To Be Stored
-		GLdouble winX, winY, winZ;	// Holds the x,y,z coordinates
-		GLdouble posX, posY, posZ;  // Hold The Final Values
+		GLdouble winX, winY, winZ;	// Holds the x,y,z coordinates in the window space
+		GLdouble posX, posY, posZ;  // Hold The lattice coordinates
 
 		glGetDoublev(GL_MODELVIEW_MATRIX, modelview);       // Retrieve The Modelview Matrix
 		glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
@@ -308,12 +308,10 @@ void Mouse(int button, int state, int x, int y)
 			//project lattice point into screen space
 			posX = FFD_lattice[i][0];
 			posY = FFD_lattice[i][1];
-			//posY = viewport[3] - posY;
 			posZ = FFD_lattice[i][2];
 			gluProject(posX, posY, posZ, 
 				modelview, projection, viewport, &winX, &winY, &winZ); 
-			winY = (double)viewport[3] - winY - 9; //seems to be 9 off?
-			//std::cout << i << ": " << winX << ", " << winY << ", " << winZ << std::endl;
+			winY = (double)viewport[3] - winY - 9; //seems to be 9 off? odd....
 
 			//compare mouse values with lattice point projected on screen
 			//does where the mouse clicks differ for OS's?
@@ -343,7 +341,7 @@ void Motion(int x, int y)
 	//
 	// This handles mouse motion when a button is pressed 
 	// 
-	// TODO: check if the user is moving a selected lattice node
+	// DONE: check if the user is moving a selected lattice node
 	//       if so move the node to a new location
 	//
 	if ( clickedNode == NULL ) {
@@ -360,17 +358,22 @@ void Motion(int x, int y)
 	glGetDoublev(GL_PROJECTION_MATRIX, projection);     // Retrieve The Projection Matrix
 	glGetIntegerv(GL_VIEWPORT, viewport);				// Retrieves The Viewport Values (X, Y, Width, Height)
 
+	gluProject(clickedNode[0][0], clickedNode[0][1], clickedNode[0][2],
+		modelview, projection, viewport, &winX, &winY, &winZ);	//running this function just to get the z val
+																//sad code is sad
+	//assign winX and winY to mouse coordinates
 	winX = (double)x;
-	winY = (double)viewport[3] - y - 9; //seems to be 9 off?
-	glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_DOUBLE, &winZ );
+	winY = (double)viewport[3] - y - 9; //seems to be 9 off? Very Strange? 
+	//glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_DOUBLE, &winZ );
 
 	//map the mouse click coordinates to object coordinates
 	gluUnProject( winX, winY, winZ,
 			modelview, projection, viewport, &objX, &objY, &objZ );
 
+	//assign object coordinates to current node
 	clickedNode[0][0] = objX;
 	clickedNode[0][1] = objY;
-	clickedNode[0][2] = objZ; // z isn't coming out right
+	clickedNode[0][2] = objZ;
 
 
 	// TODO: recompute the position of every vertex in the model 

@@ -1,4 +1,4 @@
-﻿Build started 9/16/2014 11:47:14 AM.
+﻿Build started 9/17/2014 10:52:59 PM.
      1>Project "C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\ffd.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I.. /I../mathtool /I../modelgraph /I../GL /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D FREEGLUT_STATIC /D WIN32 /D _DEBUG /D _CRT_SECURE_NO_DEPRECATE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm- /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /analyze- /errorReport:prompt /clr:nostdlib ..\main.cpp
@@ -13,7 +13,7 @@
      1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(70): warning C4018: '<' : signed/unsigned mismatch
      1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(72): warning C4018: '<' : signed/unsigned mismatch
      1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(74): warning C4018: '<' : signed/unsigned mismatch
-     1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(336): warning C4018: '<' : signed/unsigned mismatch
+     1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(306): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\ffd.exe" /INCREMENTAL /NOLOGO /LIBPATH:../lib freeglut_static.lib glu32.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\ffd.pdb" /ASSEMBLYDEBUG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /SAFESEH Debug\Basic.obj
          Debug\gli.obj
@@ -31,7 +31,6 @@
      1>ModelEdge.obj : warning LNK4204: 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
      1>model.obj : warning LNK4204: 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
      1>Quaternion.obj : warning LNK4204: 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>gli.obj : warning LNK4204: 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
      1>Basic.obj : warning LNK4204: 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
      1>freeglut_static.lib(freeglut_callbacks.obj) : warning LNK4099: PDB 'vc90.pdb' was not found with 'freeglut_static.lib(freeglut_callbacks.obj)' or at 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc90.pdb'; linking object as if no debug info
      1>freeglut_static.lib(freeglut_cursor.obj) : warning LNK4099: PDB 'vc90.pdb' was not found with 'freeglut_static.lib(freeglut_cursor.obj)' or at 'C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\Debug\vc90.pdb'; linking object as if no debug info
@@ -54,4 +53,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.80
+Time Elapsed 00:00:02.95
