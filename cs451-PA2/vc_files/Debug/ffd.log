@@ -1,4 +1,4 @@
-﻿Build started 9/17/2014 10:52:59 PM.
+﻿Build started 9/21/2014 11:52:00 PM.
      1>Project "C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\vc_files\ffd.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I.. /I../mathtool /I../modelgraph /I../GL /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D FREEGLUT_STATIC /D WIN32 /D _DEBUG /D _CRT_SECURE_NO_DEPRECATE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm- /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll" /analyze- /errorReport:prompt /clr:nostdlib ..\main.cpp
@@ -6,6 +6,18 @@
      1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(131): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(133): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(135): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(170): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(171): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(172): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(173): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(174): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(175): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(184): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(185): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(186): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(196): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(197): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\brandon\documents\visual studio 2013\projects\cs451pa2_repo\cs451-pa2\main.h(198): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
      1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(49): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
      1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(50): warning C4018: '<' : signed/unsigned mismatch
      1>C:\Users\Brandon\Documents\Visual Studio 2013\Projects\CS451PA2_Repo\cs451-PA2\draw.h(61): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
@@ -53,4 +65,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.95
+Time Elapsed 00:00:03.63
