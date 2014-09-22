@@ -29,8 +29,8 @@ Point3d COM;        //center of mass
 vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has size = (lattice_nx X lattice_ny X lattice_nz)
 
 //TODO: fill FFD_parameterization in parameterizeModel() below
-vector<double> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
-                                      //FFD_parameterization has size = models.front().v_size * (nx * ny * nz)
+vector<Point3d> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
+                                      //FFD_parameterization has size = models.front().v_size
 
 //-----------------------------------------------------------------------------
 bool readfromfile();
@@ -166,47 +166,20 @@ void computeCOM_R()
 //and store the parameterization in FFD_parameterization
 void parameterizeModel()
 {
-	float xMin, xMax, yMin, yMax, zMin, zMax; //for the sake of readability
-	xMin = FFD_lattice[0][0];
-	xMax = FFD_lattice[lattice_nx-1][0];
-	yMin = FFD_lattice[lattice_nx * lattice_ny - 1][1];
-	yMax = FFD_lattice[0][1];
-	zMin = FFD_lattice[lattice_nx * lattice_ny * lattice_nz - 1][2];
-	zMax = FFD_lattice[0][2]; //are these correct?
 	model& m = models.front();
 
 	for (unsigned int i = 0; i < m.v_size; i++)
 	{
-		vertex& v = m.vertices[i];
+		vertex & v = m.vertices[i];
 		
-		float px, py, pz; //parametization of x,y,z of a point
-		px = ((v.p[0] - xMin) / (xMax - xMin));
-		py = ((v.p[1] - yMin) / (yMax - yMin));
-		pz = ((v.p[2] - zMin) / (zMax - zMin));
-
 		//TODO: convert v.p (the position of p) into the parameterized space using FFD_lattice
-		vector<double> weights; //say you have 24 lattice nodes, than 24 weights for each model vertex
-		for (unsigned int c = 0; c < lattice_nz; c++)   //increment z
-		{
-			for (unsigned int b = 0; b < lattice_ny; b++)   //increment y
-			{
-				for (unsigned int a = 0; a < lattice_nx; a++)    //increment x
-				{
-					float dx, dy, dz, weight;  //xdirection, ydirection, zdirection, weight
-					dx = pow(px, a) * pow((1 - px), (lattice_nx - 1 - a));
-					dy = pow(py, b) * pow((1 - py), (lattice_ny - 1 - b));
-					dz = pow(pz, c) * pow((1 - pz), (lattice_nz - 1 - c));
-					weight = dx * dy * dz;
-					weights.push_back(weight);
-					//std::cout << "weight: " << weight << std::endl;
-					//std::cout << "dx: " << dx << " dy: " << dy << " dz: " << dz << std::endl;
-				}
-			}
-		}
+		Point3d pc; //parameterized coordinate
 
-		FFD_parameterization.insert(FFD_parameterization.end(), weights.begin(), weights.end());
+		FFD_parameterization.push_back(pc);
 	}
+	//end i
 
+	//done
 }
 
 //-----------------------------------------------------------------------------
