@@ -34,7 +34,7 @@ map<model*,Vector3d> model_colors;
 //this defines the size of the lattice
 extern unsigned int lattice_nx, lattice_ny, lattice_nz;
 extern vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has size = (lattice_nx X lattice_ny X lattice_nz)
-extern vector<Point3d> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
+extern vector<double> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
                                              //FFD_parameterization has size = models.front().v_size
 Point3d *clickedNode = NULL;	//selected node from lattice
 //-----------------------------------------------------------------------------
@@ -380,8 +380,8 @@ void Motion(int x, int y)
 	//       i.e., using FFD_parameterization and FFD_lattice 
 	//       Note, you only need to do this to the first model in "models"
 	//
-
 	model& m = models.front();
+
 
 	glutPostRedisplay();
 }
