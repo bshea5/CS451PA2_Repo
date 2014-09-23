@@ -36,7 +36,7 @@ extern unsigned int lattice_nx, lattice_ny, lattice_nz;
 extern vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has size = (lattice_nx X lattice_ny X lattice_nz)
 extern vector<double> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
                                              //FFD_parameterization has size = models.front().v_size
-Point3d *clickedNode = NULL;	//selected node from lattice
+Point3d *clickedNode = NULL;	//pointer to selected node from lattice
 //-----------------------------------------------------------------------------
 
 inline void DisplayLattice()
@@ -364,7 +364,6 @@ void Motion(int x, int y)
 	//assign winX and winY to mouse coordinates
 	winX = (double)x;
 	winY = (double)viewport[3] - y - 9; //seems to be 9 off? Very Strange? 
-	//glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_DOUBLE, &winZ );
 
 	//map the mouse click coordinates to object coordinates
 	gluUnProject( winX, winY, winZ,
@@ -379,9 +378,21 @@ void Motion(int x, int y)
 	// TODO: recompute the position of every vertex in the model 
 	//       i.e., using FFD_parameterization and FFD_lattice 
 	//       Note, you only need to do this to the first model in "models"
-	//
-
 	model& m = models.front();
+
+	for (unsigned int i = 0; i < m.v_size; i++)	//recompute model
+	{
+		Point3d sum(0,0,0);
+		for (unsigned int w = 0; w < lattice_nx * lattice_ny * lattice_nz; w++)
+		{				
+						//weight 					//lattice node
+			sum[0] += FFD_parameterization[i+w] * FFD_lattice[w][0];	
+			sum[1] += FFD_parameterization[i+w] * FFD_lattice[w][1];	
+			sum[2] += FFD_parameterization[i+w] * FFD_lattice[w][2];
+		}
+		m.vertices[i].p = sum;
+
+	}
 
 	glutPostRedisplay();
 }

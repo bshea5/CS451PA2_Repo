@@ -30,12 +30,14 @@ vector<Point3d> FFD_lattice; //This stores all lattice nodes, FFD_lattice has si
 
 //TODO: fill FFD_parameterization in parameterizeModel() below
 vector<double> FFD_parameterization; //This stores all parameterized coordinates of all vertices from the model
-                                      //FFD_parameterization has size = models.front().v_size
+									//FFD_parameterization has size = models.front().v_size x (nx*ny*nz)
 
 //-----------------------------------------------------------------------------
 bool readfromfile();
 void computeCOM_R();
 void parameterizeModel();
+float binomialCof(int d, int i);
+int factorial(int n);
 
 //-----------------------------------------------------------------------------
 bool parseArg(int argc, char ** argv)
@@ -176,16 +178,17 @@ void parameterizeModel()
 	
 	model& m = models.front();
 
-	for (unsigned int i = 0; i < m.v_size; i++)
-	{
-		vertex & v = m.vertices[i];
-		vector<double> weights; //say you have 24 lattice nodes, than 24 weights for each model vertex
+	for (unsigned int i = 0; i < m.v_size; i++)	
+	{ //DONE: convert v.p (the position of p) into the parameterized space using FFD_lattice
+		vertex& v = m.vertices[i];
+		vector<double> weights; 
 		float px, py, pz; //parametization of x,y,z of a point
 		px = ((v.p[0] - xMin) / (xMax - xMin));
 		py = ((v.p[1] - yMin) / (yMax - yMin));
 		pz = ((v.p[2] - zMin) / (zMax - zMin));
 
-		//TODO: convert v.p (the position of p) into the parameterized space using FFD_lattice		
+		//for each model vertex, append weights for each lattice vertex	
+		//say you have 24 lattice nodes, than 24 weights for each model vertex	
 		for (unsigned int c = 0; c < lattice_nz; c++)   //increment z
 		{
 			for (unsigned int b = 0; b < lattice_ny; b++)   //increment y
@@ -193,19 +196,32 @@ void parameterizeModel()
 				for (unsigned int a = 0; a < lattice_nx; a++)    //increment x
 				{
 					float dx, dy, dz, weight;  //xdirection, ydirection, zdirection, weight
-					dx = pow(px, a) * pow((1 - px), (lattice_nx - 1 - a));
-					dy = pow(py, b) * pow((1 - py), (lattice_ny - 1 - b));
-					dz = pow(pz, c) * pow((1 - pz), (lattice_nz - 1 - c));
+					dx = binomialCof(lattice_nx-1, a) * pow(px, a) * pow((1 - px), (lattice_nx - 1 - a));
+					dy = binomialCof(lattice_ny-1, b) * pow(py, b) * pow((1 - py), (lattice_ny - 1 - b));
+					dz = binomialCof(lattice_nz-1, c) * pow(pz, c) * pow((1 - pz), (lattice_nz - 1 - c));
 					weight = dx * dy * dz;
 					weights.push_back(weight);
-					//std::cout << "weight: " << weight << std::endl;
-					//std::cout << "dx: " << dx << " dy: " << dy << " dz: " << dz << std::endl;
 				}
 			}
 		}
+		//sum of weights for a point, equal one...I checked, twice ;D
 
 		FFD_parameterization.insert(FFD_parameterization.end(), weights.begin(), weights.end());
 	}
+}
+
+//utilize a binomial coefficient to get the weight of a direction
+//will multiply the x,y,z directions to get actual weight for node
+// 'd choose i'
+float binomialCof(int d, int i)
+{
+	return ( factorial(d) / (factorial(i) * factorial(d-i)) );
+}
+
+//get the factorization of a number n
+int factorial(int n)
+{
+	return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;	//yay recursion! :D
 }
 
 //-----------------------------------------------------------------------------
