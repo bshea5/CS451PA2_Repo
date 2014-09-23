@@ -263,3 +263,21 @@ main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
 main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
   mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
   draw.h GL/gli.h
+main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
+  mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
+  draw.h GL/gli.h
+main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
+  mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
+  draw.h GL/gli.h
+main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
+  mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
+  draw.h GL/gli.h
+main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
+  mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
+  draw.h GL/gli.h
+main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
+  mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
+  draw.h GL/gli.h
+main.o: main.cpp main.h objReader.h mathtool/Point.h mathtool/Vector.h \
+  mathtool/Basic.h mathtool/Quaternion.h mathtool/Matrix.h model.h \
+  draw.h GL/gli.h

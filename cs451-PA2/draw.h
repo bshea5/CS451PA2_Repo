@@ -375,25 +375,27 @@ void Motion(int x, int y)
 	clickedNode[0][2] = objZ;
 
 
-	// TODO: recompute the position of every vertex in the model 
+	// DONE: recompute the position of every vertex in the model 
 	//       i.e., using FFD_parameterization and FFD_lattice 
 	//       Note, you only need to do this to the first model in "models"
+	//	Note: Object flips if FFD_lattice is not called in reverse order :/
 	model& m = models.front();
+	int latticeLength = lattice_nx * lattice_ny * lattice_nz;
 
 	for (unsigned int i = 0; i < m.v_size; i++)	//recompute model
 	{
 		Point3d sum(0,0,0);
-		for (unsigned int w = 0; w < lattice_nx * lattice_ny * lattice_nz; w++)
+		for (unsigned int w = 0; w < latticeLength; w++)
 		{				
-						//weight 					//lattice node
-			sum[0] += FFD_parameterization[i+w] * FFD_lattice[w][0];	
-			sum[1] += FFD_parameterization[i+w] * FFD_lattice[w][1];	
-			sum[2] += FFD_parameterization[i+w] * FFD_lattice[w][2];
+						//weight 								//lattice node   
+			sum[0] += FFD_parameterization[i*latticeLength+w] * FFD_lattice[latticeLength-1-w][0];	
+			sum[1] += FFD_parameterization[i*latticeLength+w] * FFD_lattice[latticeLength-1-w][1];	
+			sum[2] += FFD_parameterization[i*latticeLength+w] * FFD_lattice[latticeLength-1-w][2];
+			//objects flips upside down if I don't call FFD_lattice nodes in reverse order...
+
 		}
-		m.vertices[i].p = sum;
-
+		m.vertices[i].p = sum;	//assign new model vertex position
 	}
-
 	glutPostRedisplay();
 }
 
